@@ -1,6 +1,6 @@
 {
   "name": "logger-clearable",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A logger that is clearable",
   "homepage": "https://github.com/bevry/logger-clearable",
   "license": "MIT",
