@@ -23,7 +23,7 @@ const readline = require('readline')
  * @public
  */
 class Logger {
-	constructor ({ stream = process.stdout } = {}) {
+	constructor({ stream = process.stdout } = {}) {
 		this.message = null
 		this.timer = null
 		this.stream = stream
@@ -36,7 +36,7 @@ class Logger {
 	@static
 	@public
 	*/
-	static create (...args) {
+	static create(...args) {
 		return new this(...args)
 	}
 
@@ -47,13 +47,13 @@ class Logger {
 	 * @chainable
 	 * @public
 	 */
-	queue (log) {
+	queue(log) {
 		this.discard()
 		this.timer = setImmediate(() => {
 			const message = log()
 			if (message != null) {
 				this.clear()
-				this.message = message.endsWith('\n') ? message : (message + '\n')
+				this.message = message.endsWith('\n') ? message : message + '\n'
 				this.stream.write(this.message)
 			}
 		})
@@ -67,7 +67,7 @@ class Logger {
 	 * @chainable
 	 * @public
 	 */
-	log (message) {
+	log(message) {
 		this.queue(() => message)
 		return this
 	}
@@ -78,7 +78,7 @@ class Logger {
 	 * @chainable
 	 * @public
 	 */
-	clear () {
+	clear() {
 		if (this.message) {
 			const lines = (this.message || '').split('\n').length
 			const dy = (lines - 1) * -1
@@ -96,7 +96,7 @@ class Logger {
 	 * @chainable
 	 * @public
 	 */
-	discard () {
+	discard() {
 		if (this.timer) {
 			clearImmediate(this.timer)
 			this.timer = null
