@@ -46,9 +46,10 @@ A logger that is clearable
 
 <p>This package is published with the following editions:</p>
 
-<ul><li><code>logger-clearable</code> aliases <code>logger-clearable/index.js</code> which uses <a href="https://editions.bevry.me" title="Editions are the best way to produce and consume packages you care about.">Editions</a> to automatically select the correct edition for the consumers environment</li>
-<li><code>logger-clearable/source/index.js</code> is esnext source code with require for modules</li>
-<li><code>logger-clearable/edition-node-4/index.js</code> is esnext compiled for node.js 4 with require for modules</li></ul>
+<ul><li><code>logger-clearable</code> aliases <code>logger-clearable/source/index.js</code></li>
+<li><code>logger-clearable/source/index.js</code> is esnext source code with require for modules</li></ul>
+
+<p>Environments older than Node.js v8 may need <a href="https://babeljs.io/docs/usage/polyfill/" title="A polyfill that emulates missing ECMAScript environment features">Babel's Polyfill</a> or something similar.</p>
 
 <h3><a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a></h3>
 
