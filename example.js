@@ -10,8 +10,7 @@ const timer = setInterval(function () {
 		const date = new Date()
 		const time = date.toISOString()
 		logger.log(time)
-	}
-	else {
+	} else {
 		// the above will actually call: logger.queue(() => time)
 		// instead, we can use queue directly:
 		// using queue direclty is more performant as

@@ -33,6 +33,50 @@ A logger that is clearable
 <!-- /DESCRIPTION -->
 
 
+## Usage
+
+[Complete API Documentation.](http://master.logger-clearable.bevry.surge.sh/docs/index.html)
+
+```javascript
+'use strict'
+
+// create our clearable logger
+const logger = require('logger-clearable').create()
+const method = 'log'
+
+// log the date every second
+const timer = setInterval(function () {
+    if (method === 'log') {
+        const date = new Date()
+        const time = date.toISOString()
+        logger.log(time)
+    } else {
+        // the above will actually call: logger.queue(() => time)
+        // instead, we can use queue directly:
+        // using queue direclty is more performant as
+        // any setup for our particular message will happen only if that message will be written
+        // this is applicable as logger won't bother writing messages that would be cleared instantly
+        // e.g. logger.log('hello').log('world') would otherwise write 'hello' then have to clear it right away
+        // instead, logger just skips writing 'hello' and will just write 'world'
+        logger.queue(function () {
+            const date = new Date()
+            const time = date.toISOString()
+            return time
+        })
+    }
+}, 100)
+
+// on ctrl+c close the timer and discard any upcoming logs
+process.on('SIGINT', () => {
+    // stop any more calls to logger
+    clearInterval(timer)
+    // discard any logger queued updated
+    logger.discard()
+    // and clear the log
+    logger.clear()
+})
+```
+
 <!-- INSTALL/ -->
 
 <h2>Install</h2>
@@ -40,7 +84,8 @@ A logger that is clearable
 <a href="https://npmjs.com" title="npm is a package manager for javascript"><h3>npm</h3></a>
 <ul>
 <li>Install: <code>npm install --save logger-clearable</code></li>
-<li>Require: <code>require('logger-clearable')</code></li>
+<li>Import: <code>import * as pkg from ('logger-clearable')</code></li>
+<li>Require: <code>const pkg = require('logger-clearable')</code></li>
 </ul>
 
 <h3><a href="https://editions.bevry.me" title="Editions are the best way to produce and consume packages you care about.">Editions</a></h3>
@@ -48,9 +93,7 @@ A logger that is clearable
 <p>This package is published with the following editions:</p>
 
 <ul><li><code>logger-clearable</code> aliases <code>logger-clearable/source/index.js</code></li>
-<li><code>logger-clearable/source/index.js</code> is esnext source code with require for modules</li></ul>
-
-<p>Environments older than Node.js v8 may need <a href="https://babeljs.io/docs/usage/polyfill/" title="A polyfill that emulates missing ECMAScript environment features">Babel's Polyfill</a> or something similar.</p>
+<li><code>logger-clearable/source/index.js</code> is <a href="https://en.wikipedia.org/wiki/ECMAScript#ES.Next" title="ECMAScript Next">ESNext</a> source code for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li></ul>
 
 <h3><a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a></h3>
 
@@ -66,51 +109,6 @@ This project provides its type information via inline <a href="http://usejsdoc.o
 
 <!-- /INSTALL -->
 
-
-## Usage
-
-[API Documentation.](http://master.logger-clearable.bevry.surge.sh/docs/)
-
-``` javascript
-'use strict'
-
-// create our clearable logger
-const logger = require('logger-clearable').create()
-const method = 'log'
-
-// log the date every second
-const timer = setInterval(function () {
-	if (method === 'log') {
-		const date = new Date()
-		const time = date.toISOString()
-		logger.log(time)
-	}
-	else {
-		// the above will actually call: logger.queue(() => time)
-		// instead, we can use queue directly:
-		// using queue direclty is more performant as
-		// any setup for our particular message will happen only if that message will be written
-		// this is applicable as logger won't bother writing messages that would be cleared instantly
-		// e.g. logger.log('hello').log('world') would otherwise write 'hello' then have to clear it right away
-		// instead, logger just skips writing 'hello' and will just write 'world'
-		logger.queue(function () {
-			const date = new Date()
-			const time = date.toISOString()
-			return time
-		})
-	}
-}, 100)
-
-// on ctrl+c close the timer and discard any upcoming logs
-process.on('SIGINT', () => {
-	// stop any more calls to logger
-	clearInterval(timer)
-	// discard any logger queued updated
-	logger.discard()
-	// and clear the log
-	logger.clear()
-})
-```
 
 <!-- HISTORY/ -->
 
@@ -138,7 +136,7 @@ process.on('SIGINT', () => {
 
 These amazing people are maintaining this project:
 
-<ul><li><a href="http://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/logger-clearable/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/logger-clearable">view contributions</a></li></ul>
+<ul><li><a href="https://github.com/balupton">Benjamin Lupton</a> — <a href="https://github.com/bevry/logger-clearable/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/logger-clearable">view contributions</a></li></ul>
 
 <h3>Sponsors</h3>
 
@@ -158,7 +156,8 @@ No sponsors yet! Will you be the first?
 
 These amazing people have contributed code to this project:
 
-<ul><li><a href="http://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/logger-clearable/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/logger-clearable">view contributions</a></li></ul>
+<ul><li><a href="https://github.com/balupton">Benjamin Lupton</a> — <a href="https://github.com/bevry/logger-clearable/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/logger-clearable">view contributions</a></li>
+<li><a href="http://balupton.com">Benjamin Lupton</a></li></ul>
 
 <a href="https://github.com/bevry/logger-clearable/blob/master/CONTRIBUTING.md#files">Discover how you can contribute by heading on over to the <code>CONTRIBUTING.md</code> file.</a>
 
