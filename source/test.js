@@ -1,6 +1,6 @@
 'use strict'
 
-const Logger = require('./')
+const Logger = require('./index.js')
 const { equal } = require('assert-helpers')
 const kava = require('kava')
 const { PassThrough } = require('stream')
