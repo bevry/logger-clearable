@@ -35,7 +35,7 @@ A logger that is clearable
 
 ## Usage
 
-[Complete API Documentation.](http://master.logger-clearable.bevry.surge.sh/docs/index.html)
+[Complete API Documentation.](http://master.logger-clearable.bevry.surge.sh/docs/)
 
 ```javascript
 'use strict'
