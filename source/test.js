@@ -28,7 +28,7 @@ kava.suite('logger-clearable', function (suite, test) {
 				data,
 				['b', 'c', 'd']
 					.map((log) => log + '\n')
-					.join('\u001b[1A\u001b[0J\u001b[2K'),
+					.join('\u001b[1A\u001b[0J\u001b[2K')
 			)
 			complete()
 		})
